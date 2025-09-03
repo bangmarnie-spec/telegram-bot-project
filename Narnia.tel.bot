@@ -2,7 +2,7 @@ from telegram import Update, InputMediaPhoto, InputMediaVideo
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 # توکن ربات خودت
-TOKEN = "YOUR_BOT_TOKEN"
+TOKEN = "8241321020:AAGOUo7_VvpXYyfnL9d_4o8xyWWajbpvm7g" 
 
 async def handle_media(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.message
