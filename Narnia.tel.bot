@@ -1,0 +1,39 @@
+from telegram import Update, InputMediaPhoto, InputMediaVideo
+from telegram.ext import Application, MessageHandler, filters, ContextTypes
+
+# توکن ربات خودت
+TOKEN = "YOUR_BOT_TOKEN"
+
+async def handle_media(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = update.message
+
+    if message.photo:  # اگر عکس بود
+        file_id = message.photo[-1].file_id
+        media_group = [
+            InputMediaPhoto(media=file_id, caption="نسخه ۱"),
+            InputMediaPhoto(media=file_id, caption="نسخه ۲")
+        ]
+        await context.bot.send_media_group(chat_id=message.chat_id, media=media_group)
+
+    elif message.video:  # اگر ویدیو بود
+        file_id = message.video.file_id
+        media_group = [
+            InputMediaVideo(media=file_id, caption="نسخه ۱"),
+            InputMediaVideo(media=file_id, caption="نسخه ۲")
+        ]
+        await context.bot.send_media_group(chat_id=message.chat_id, media=media_group)
+
+    else:
+        await message.reply_text("فقط عکس یا ویدیو بفرست 🙂")
+
+def main():
+    app = Application.builder().token(TOKEN).build()
+
+    # هندلر برای عکس و ویدیو
+    app.add_handler(MessageHandler(filters.PHOTO | filters.VIDEO, handle_media))
+
+    print("Bot is running...")
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()
